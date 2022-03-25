@@ -1,7 +1,9 @@
 import express from 'express';
 
+import { productsRouter } from '../../../../modules/products/infra/http/routes';
+
 const v1Router = express.Router();
 
-v1Router.get('/', (req, res) => res.json({ message: 'Hello, world' }));
+v1Router.use('/products', productsRouter);
 
 export { v1Router };
