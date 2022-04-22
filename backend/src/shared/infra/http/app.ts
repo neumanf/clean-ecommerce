@@ -4,6 +4,9 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import { v1Router } from './api/v1';
+import { DBService } from '../typeorm/db.service';
+
+DBService.init();
 
 const app = express();
 

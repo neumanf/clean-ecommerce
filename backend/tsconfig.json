@@ -6,6 +6,8 @@
         "rootDir": "src",
         "resolveJsonModule": true,
         "outDir": "build",
+        "experimentalDecorators": true,
+        "strictPropertyInitialization": false,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
