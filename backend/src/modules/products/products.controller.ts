@@ -2,6 +2,7 @@ import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 
 import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
+import { FindProductDto } from './dtos/find-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -12,9 +13,9 @@ export class ProductsController {
         return this.productsService.findAll();
     }
 
-    @Get(':productId')
-    async findOne(@Param('productId') productId: number): Promise<Product> {
-        const product = await this.productsService.findOne(productId);
+    @Get(':id')
+    async findOne(@Param() { id }: FindProductDto): Promise<Product> {
+        const product = await this.productsService.findOne(id);
 
         if (!product) {
             throw new NotFoundException('Product not found.');
