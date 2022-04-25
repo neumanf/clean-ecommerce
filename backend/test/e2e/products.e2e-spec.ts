@@ -65,4 +65,45 @@ describe('(e2e) ProductsController', () => {
             ]);
         });
     });
+
+    describe('(GET) /api/products/:id', () => {
+        it('should return 200 and valid product when product exists', async () => {
+            const product = productFake();
+            const insertedProduct = await dbConnection
+                .getRepository(Product)
+                .insert(product);
+            const insertedProductId = insertedProduct.identifiers[0].id;
+            const response = await request(app.getHttpServer()).get(
+                `/api/products/${insertedProductId}`
+            );
+
+            expect(response.body.statusCode).toBe(200);
+            expect(response.body.data).toEqual({
+                id: insertedProductId,
+                name: product.name,
+                description: product.description,
+                category: product.category,
+                imageUrl: product.imageUrl,
+                price: product.price.toString(),
+            });
+        });
+
+        it('should return 404 and an error when product does not exists', async () => {
+            const response = await request(app.getHttpServer()).get(
+                '/api/products/0'
+            );
+
+            expect(response.body.statusCode).toBe(404);
+            expect(response.body.error).toEqual('Not Found');
+        });
+
+        it('should return 401 and an error when id is invalid', async () => {
+            const response = await request(app.getHttpServer()).get(
+                '/api/products/abc'
+            );
+
+            expect(response.body.statusCode).toBe(400);
+            expect(response.body.error).toEqual('Bad Request');
+        });
+    });
 });
