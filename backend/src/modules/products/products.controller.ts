@@ -9,7 +9,7 @@ import {
 
 import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
-import { FindProductDto } from './dtos/find-product.dto';
+import { FindProductByIdDto } from './dtos/find-product-by-id.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 
 @Controller('products')
@@ -21,10 +21,9 @@ export class ProductsController {
         return this.productsService.findAll();
     }
 
-    // TODO: rename to findOneById
     @Get(':id')
-    async findOne(@Param() { id }: FindProductDto): Promise<Product> {
-        const product = await this.productsService.findOne(id);
+    async findById(@Param() { id }: FindProductByIdDto): Promise<Product> {
+        const product = await this.productsService.findById(id);
 
         if (!product) {
             throw new NotFoundException('Product not found.');
