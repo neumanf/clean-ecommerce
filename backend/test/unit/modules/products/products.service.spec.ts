@@ -1,19 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { ProductsService } from '../../../../src/modules/products/products.service';
+import { Product } from '../../../../src/modules/products/entities/product.entity';
 
 describe('ProductsService', () => {
-    let service: ProductsService;
+    let sut: ProductsService;
+    let productsRepository: Repository<Product>;
+
+    const mockProductsRepository = {
+        find: () => { },
+        findOne: () => { },
+        save: () => { },
+    }
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [ProductsService],
+            providers: [ProductsService,
+                {
+                    provide: getRepositoryToken(Product),
+                    useValue: mockProductsRepository
+                }],
         }).compile();
 
-        service = module.get<ProductsService>(ProductsService);
+        sut = module.get<ProductsService>(ProductsService);
+        productsRepository = module.get<Repository<Product>>(getRepositoryToken(Product));
     });
 
     it('should be defined', () => {
-        expect(service).toBeDefined();
+        expect(sut).toBeDefined();
     });
 });
