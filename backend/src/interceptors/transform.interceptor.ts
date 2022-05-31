@@ -20,6 +20,17 @@ export class TransformInterceptor<T>
         next: CallHandler
     ): Observable<Response<T>> {
         const statusCode = context.getArgByIndex(1).statusCode;
-        return next.handle().pipe(map((data) => ({ statusCode, data })));
+        return next.handle().pipe(
+            map((data) =>
+                data.items && data.meta && data.links
+                    ? {
+                          statusCode,
+                          data: data.items,
+                          meta: data.meta,
+                          links: data.links,
+                      }
+                    : { statusCode, data }
+            )
+        );
     }
 }
