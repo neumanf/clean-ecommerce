@@ -3,6 +3,7 @@ import React from "react";
 import { useQuery } from "react-query";
 
 import api from "../../helpers/api";
+import { ErrorBox } from "../error-box";
 import { Spinner } from "../spinner";
 import { ProductCard } from "./product-card";
 
@@ -31,7 +32,8 @@ export function Catalog() {
 
     if (isLoading) return <Spinner />;
 
-    if (isError || !products) return <>Error while fetching products</>;
+    if (isError || !products)
+        return <ErrorBox message="Couldn't fetch products." />;
 
     return (
         <Grid>
