@@ -1,8 +1,9 @@
-import { Grid } from "@mantine/core";
+import { Center, Grid, Loader } from "@mantine/core";
 import React from "react";
 import { useQuery } from "react-query";
 
 import api from "../../helpers/api";
+import { Spinner } from "../spinner";
 import { ProductCard } from "./product-card";
 
 interface Product {
@@ -28,7 +29,7 @@ export function Catalog() {
         isError,
     } = useQuery("products", fetchProducts);
 
-    if (isLoading) return <>Loading...</>;
+    if (isLoading) return <Spinner />;
 
     if (isError || !products) return <>Error while fetching products</>;
 
