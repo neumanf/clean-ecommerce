@@ -12,6 +12,7 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe());
     app.useGlobalInterceptors(new TransformInterceptor());
+    app.enableCors();
 
     await app.listen(configService.get('port'));
 }
