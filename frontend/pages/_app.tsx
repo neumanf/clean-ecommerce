@@ -1,6 +1,9 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 export default function App(props: AppProps) {
     const { Component, pageProps } = props;
@@ -15,15 +18,17 @@ export default function App(props: AppProps) {
                 />
             </Head>
 
-            <MantineProvider
-                withGlobalStyles
-                withNormalizeCSS
-                theme={{
-                    colorScheme: "light",
-                }}
-            >
-                <Component {...pageProps} />
-            </MantineProvider>
+            <QueryClientProvider client={queryClient}>
+                <MantineProvider
+                    withGlobalStyles
+                    withNormalizeCSS
+                    theme={{
+                        colorScheme: "light",
+                    }}
+                >
+                    <Component {...pageProps} />
+                </MantineProvider>
+            </QueryClientProvider>
         </>
     );
 }
