@@ -1,7 +1,10 @@
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
+import { Container, MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "react-query";
+
+import { NavBar } from "../components/navbar";
+import { navBarLinks } from "../components/navbar/links";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +29,10 @@ export default function App(props: AppProps) {
                         colorScheme: "light",
                     }}
                 >
-                    <Component {...pageProps} />
+                    <NavBar links={navBarLinks} />
+                    <Container>
+                        <Component {...pageProps} />
+                    </Container>
                 </MantineProvider>
             </QueryClientProvider>
         </>
