@@ -1,4 +1,4 @@
-import { Center, Grid, Loader } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import React from "react";
 import { useQuery } from "react-query";
 
@@ -7,8 +7,9 @@ import { ErrorBox } from "../error-box";
 import { Spinner } from "../spinner";
 import { ProductCard } from "./product-card";
 
-interface Product {
+export interface Product {
     id: string;
+    slug: string;
     name: string;
     description: string;
     category: string;
@@ -37,9 +38,10 @@ export function Catalog() {
 
     return (
         <Grid>
-            {products.map((product: any) => (
+            {products.map((product) => (
                 <Grid.Col span={4} key={product.id}>
                     <ProductCard
+                        slug={product.slug}
                         name={product.name}
                         description={product.description}
                         category={product.category}

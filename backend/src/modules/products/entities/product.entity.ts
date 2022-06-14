@@ -1,9 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Index } from 'typeorm';
 
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Column('varchar')
+    @Index({ unique: true })
+    slug: string;
 
     @Column('varchar')
     name: string;

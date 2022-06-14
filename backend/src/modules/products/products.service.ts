@@ -9,6 +9,7 @@ import {
 
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dtos/create-product.dto';
+import { slugify } from '../../utils/slugify';
 
 @Injectable()
 export class ProductsService {
@@ -21,11 +22,14 @@ export class ProductsService {
         return paginate<Product>(this.productsRepository, options);
     }
 
-    async findById(id: number): Promise<Product> {
-        return this.productsRepository.findOne(id);
+    async findBySlug(slug: string): Promise<Product> {
+        return this.productsRepository.findOne({ slug });
     }
 
     async create(createProductDto: CreateProductDto) {
-        return this.productsRepository.save(createProductDto);
+        const slug = slugify(createProductDto.name);
+        const product = { ...createProductDto, slug };
+
+        return this.productsRepository.save(product);
     }
 }

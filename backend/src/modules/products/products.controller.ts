@@ -13,8 +13,8 @@ import { Pagination } from 'nestjs-typeorm-paginate';
 
 import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
-import { FindProductByIdDto } from './dtos/find-product-by-id.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
+import { FindProductBySlugDto } from './dtos/find-product-by-slug.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -35,9 +35,11 @@ export class ProductsController {
         });
     }
 
-    @Get(':id')
-    async findById(@Param() { id }: FindProductByIdDto): Promise<Product> {
-        const product = await this.productsService.findById(id);
+    @Get(':slug')
+    async findBySlug(
+        @Param() { slug }: FindProductBySlugDto
+    ): Promise<Product> {
+        const product = await this.productsService.findBySlug(slug);
 
         if (!product) {
             throw new NotFoundException('Product not found.');

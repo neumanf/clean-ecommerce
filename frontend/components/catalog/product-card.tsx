@@ -8,6 +8,9 @@ import {
     createStyles,
     Button,
 } from "@mantine/core";
+import Link from "next/link";
+
+import { Product } from ".";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -35,15 +38,10 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-export interface ProductCardProps {
-    name: string;
-    price: string;
-    description: string;
-    category: string;
-    imageUrl: string;
-}
+export type ProductCardProps = Omit<Product, "id">;
 
 export function ProductCard({
+    slug,
     name,
     description,
     imageUrl,
@@ -55,14 +53,20 @@ export function ProductCard({
     return (
         <Card withBorder radius="md" className={classes.card}>
             <Card.Section className={classes.imageSection}>
-                <Image src={imageUrl} alt={name} />
+                <Link href={`/product/${slug}`} passHref>
+                    <Text component="a">
+                        <Image src={imageUrl} alt={name} />
+                    </Text>
+                </Link>
             </Card.Section>
 
             <Group position="apart" mt="xs" mb="xs">
                 <div>
-                    <Text weight={500} lineClamp={1}>
-                        {name}
-                    </Text>
+                    <Link href={`/product/${slug}`} passHref>
+                        <Text component="a" weight={500} lineClamp={1}>
+                            {name}
+                        </Text>
+                    </Link>
                     <Text size="xs" color="dimmed" lineClamp={1}>
                         {description}
                     </Text>
