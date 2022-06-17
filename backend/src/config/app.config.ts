@@ -1,5 +1,6 @@
 export default () => ({
     env: process.env.NODE_ENV,
+    frontendUrl: process.env.FRONTEND_URL,
     port: parseInt(process.env.PORT, 10) || 3001,
     database: {
         name: process.env.DB_NAME,

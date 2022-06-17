@@ -12,7 +12,7 @@ async function bootstrap() {
     app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe());
     app.useGlobalInterceptors(new TransformInterceptor());
-    app.enableCors();
+    app.enableCors({ origin: configService.get('frontendUrl') });
 
     await app.listen(configService.get('port'));
 }
