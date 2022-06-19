@@ -1,11 +1,9 @@
 import {
     Body,
     Controller,
-    DefaultValuePipe,
     Get,
     NotFoundException,
     Param,
-    ParseIntPipe,
     Post,
     Query,
 } from '@nestjs/common';
@@ -15,6 +13,7 @@ import { Product } from './entities/product.entity';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { FindProductBySlugDto } from './dtos/find-product-by-slug.dto';
+import { FindAllProductsDto } from './dtos/find-all-products.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -22,9 +21,7 @@ export class ProductsController {
 
     @Get()
     async findAll(
-        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
-        @Query('limit', new DefaultValuePipe(30), ParseIntPipe)
-        limit = 30
+        @Query() { page = 1, limit = 30 }: FindAllProductsDto
     ): Promise<Pagination<Product>> {
         limit = limit > 100 ? 100 : limit;
 
