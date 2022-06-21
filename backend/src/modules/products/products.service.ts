@@ -18,8 +18,17 @@ export class ProductsService {
         private readonly productsRepository: Repository<Product>
     ) {}
 
-    async findAll(options: IPaginationOptions): Promise<Pagination<Product>> {
-        return paginate<Product>(this.productsRepository, options);
+    async findAll(
+        options: IPaginationOptions,
+        category: string
+    ): Promise<Pagination<Product>> {
+        return paginate<Product>(
+            this.productsRepository,
+            options,
+            category && {
+                where: { category },
+            }
+        );
     }
 
     async findBySlug(slug: string): Promise<Product> {

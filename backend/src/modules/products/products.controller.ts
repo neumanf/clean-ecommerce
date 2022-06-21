@@ -21,15 +21,18 @@ export class ProductsController {
 
     @Get()
     async findAll(
-        @Query() { page = 1, limit = 30 }: FindAllProductsDto
+        @Query() { page = 1, limit = 30, category }: FindAllProductsDto
     ): Promise<Pagination<Product>> {
         limit = limit > 100 ? 100 : limit;
 
-        return this.productsService.findAll({
-            page,
-            limit,
-            route: '/api/products',
-        });
+        return this.productsService.findAll(
+            {
+                page,
+                limit,
+                route: '/api/products',
+            },
+            category
+        );
     }
 
     @Get(':slug')
