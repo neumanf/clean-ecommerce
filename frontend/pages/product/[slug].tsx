@@ -2,6 +2,7 @@ import { Button, Group, Text, Title, Image, createStyles } from "@mantine/core";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
+import { GlassMagnifier } from "react-image-magnifiers";
 
 import { Product } from "../../components/catalog";
 import { ErrorBox } from "../../components/error-box";
@@ -29,7 +30,6 @@ const useStyles = createStyles((theme) => ({
 
     title: {
         color: theme.colorScheme === "dark" ? theme.white : theme.black,
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
         fontSize: 44,
         lineHeight: 1.2,
         fontWeight: 900,
@@ -80,10 +80,11 @@ export default function ProductDetails() {
 
     return (
         <div className={classes.inner}>
-            <Image
-                src={product.imageUrl}
+            <GlassMagnifier
+                imageSrc={product.imageUrl}
                 className={classes.image}
-                alt={product.name}
+                imageAlt={product.name}
+                magnifierSize="40%"
             />
             <div className={classes.content}>
                 <Title className={classes.title}>{product.name}</Title>
