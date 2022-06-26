@@ -1,4 +1,5 @@
 import { Grid } from "@mantine/core";
+import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
 
@@ -19,17 +20,23 @@ export interface Product {
 
 type ProductsData = { data: Product[] };
 
-const fetchProducts = async () => {
-    const res = await api.get<ProductsData>("/products");
+const fetchProducts = async (category?: string | string[]) => {
+    if (typeof category === "object") return [];
+    const path = `/products${category ? `?category=${category}` : ""}`;
+    const res = await api.get<ProductsData>(path);
     return res.data.data;
 };
 
 export function Catalog() {
+    const router = useRouter();
+    const category = router.query.category;
     const {
         data: products,
         isLoading,
         isError,
-    } = useQuery("products", fetchProducts);
+    } = useQuery(["products", category], ({ queryKey }) =>
+        fetchProducts(queryKey[1])
+    );
 
     if (isLoading) return <Spinner />;
 

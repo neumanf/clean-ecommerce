@@ -30,7 +30,7 @@ export default function App(props: AppProps) {
                     }}
                 >
                     <NavBar links={navBarLinks} />
-                    <Container>
+                    <Container size={1400}>
                         <Component {...pageProps} />
                     </Container>
                 </MantineProvider>
