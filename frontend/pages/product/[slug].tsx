@@ -65,13 +65,9 @@ export default function ProductDetails() {
         isLoading,
         isIdle,
         isError,
-    } = useQuery(
-        ["product", slug],
-        ({ queryKey }) => fetchProduct(queryKey[1]),
-        {
-            enabled: !!slug,
-        }
-    );
+    } = useQuery(["product", slug], () => fetchProduct(slug), {
+        enabled: !!slug,
+    });
 
     if (isLoading || isIdle) return <Spinner />;
 

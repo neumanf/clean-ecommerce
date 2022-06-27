@@ -34,9 +34,7 @@ export function Catalog() {
         data: products,
         isLoading,
         isError,
-    } = useQuery(["products", category], ({ queryKey }) =>
-        fetchProducts(queryKey[1])
-    );
+    } = useQuery(["products", category], () => fetchProducts(category));
 
     if (isLoading) return <Spinner />;
 
