@@ -4,7 +4,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { GlassMagnifier } from "react-image-magnifiers";
 
-import { Product } from "../../components/catalog";
+import { Product } from "../../types/product";
 import { ErrorBox } from "../../components/error-box";
 import { Spinner } from "../../components/spinner";
 import api from "../../helpers/api";

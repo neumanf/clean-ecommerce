@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import Link from "next/link";
 
-import { Product } from ".";
+import { Product } from "../../types/product";
 
 const useStyles = createStyles((theme) => ({
     card: {
