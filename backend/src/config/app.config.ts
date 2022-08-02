@@ -10,4 +10,13 @@ export default () => ({
         password: process.env.DB_PASSWORD,
         testName: process.env.DB_TEST_NAME,
     },
+    mail: {
+        user: process.env.MAIL_AUTH_USER,
+    },
+    oauth: {
+        clientId: process.env.OAUTH_CLIENTID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        accessToken: process.env.OAUTH_ACCESS_TOKEN,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+    },
 });

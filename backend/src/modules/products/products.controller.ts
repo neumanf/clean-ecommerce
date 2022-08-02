@@ -14,6 +14,7 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { FindProductBySlugDto } from './dtos/find-product-by-slug.dto';
 import { FindAllProductsDto } from './dtos/find-all-products.dto';
+import { NotifyUnavailableProductDto } from './dtos/notify-unavailable-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -46,6 +47,22 @@ export class ProductsController {
         }
 
         return product;
+    }
+
+    @Post(':slug/unavailable')
+    async notifyUnavailable(
+        @Param() { slug }: FindProductBySlugDto,
+        @Body()
+        { userEmail, userAddress, userMessage }: NotifyUnavailableProductDto
+    ) {
+        await this.productsService.notifyUnavailable(
+            userEmail,
+            userAddress,
+            userMessage,
+            slug
+        );
+
+        return 'Email sent successfully.';
     }
 
     @Post()
