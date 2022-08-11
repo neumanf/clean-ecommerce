@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Card,
     Image,
@@ -7,10 +7,12 @@ import {
     Badge,
     createStyles,
     Button,
+    Modal,
 } from "@mantine/core";
 import Link from "next/link";
 
 import { Product } from "../../types/product";
+import { UnavailableProductModal } from "./unavailable-product-modal";
 
 const useStyles = createStyles((theme) => ({
     card: {
@@ -49,44 +51,60 @@ export function ProductCard({
     category,
 }: ProductCardProps) {
     const { classes } = useStyles();
+    const [modalOpened, setModalOpened] = useState(false);
+
+    const buyProduct = () => {
+        setModalOpened(true);
+    };
 
     return (
-        <Card withBorder radius="md" className={classes.card}>
-            <Card.Section className={classes.imageSection}>
-                <Link href={`/product/${slug}`} passHref>
-                    <Text component="a">
-                        <Image src={imageUrl} alt={name} />
-                    </Text>
-                </Link>
-            </Card.Section>
-
-            <Group position="apart" mt="xs" mb="xs">
-                <div>
+        <>
+            <UnavailableProductModal
+                slug={slug}
+                modalOpened={modalOpened}
+                setModalOpened={setModalOpened}
+            />
+            <Card withBorder radius="md" className={classes.card}>
+                <Card.Section className={classes.imageSection}>
                     <Link href={`/product/${slug}`} passHref>
-                        <Text component="a" weight={500} lineClamp={1}>
-                            {name}
+                        <Text component="a">
+                            <Image src={imageUrl} alt={name} />
                         </Text>
                     </Link>
-                    <Text size="xs" color="dimmed" lineClamp={1}>
-                        {description}
-                    </Text>
-                </div>
-                <Badge variant="outline">{category}</Badge>
-            </Group>
+                </Card.Section>
 
-            <Card.Section className={classes.section}>
-                <Group spacing={30}>
+                <Group position="apart" mt="xs" mb="xs">
                     <div>
-                        <Text size="xl" weight={700} sx={{ lineHeight: 1 }}>
-                            {`$ ${price}`}
+                        <Link href={`/product/${slug}`} passHref>
+                            <Text component="a" weight={500} lineClamp={1}>
+                                {name}
+                            </Text>
+                        </Link>
+                        <Text size="xs" color="dimmed" lineClamp={1}>
+                            {description}
                         </Text>
                     </div>
-
-                    <Button radius="xl" style={{ flex: 1 }}>
-                        Buy
-                    </Button>
+                    <Badge variant="outline">{category}</Badge>
                 </Group>
-            </Card.Section>
-        </Card>
+
+                <Card.Section className={classes.section}>
+                    <Group spacing={30}>
+                        <div>
+                            <Text size="xl" weight={700} sx={{ lineHeight: 1 }}>
+                                {`$ ${price}`}
+                            </Text>
+                        </div>
+
+                        <Button
+                            onClick={buyProduct}
+                            radius="xl"
+                            style={{ flex: 1 }}
+                        >
+                            Buy
+                        </Button>
+                    </Group>
+                </Card.Section>
+            </Card>
+        </>
     );
 }
